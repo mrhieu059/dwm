@@ -9,3 +9,4 @@
 - no border
 - hide vacant (inactive tags)
 - monocle tag
+- full gaps
