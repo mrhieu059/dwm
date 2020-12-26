@@ -46,7 +46,7 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      		instance     	 title       tags mask     isfloating   monitor */
-	{ "firefox",  		NULL,        	 NULL,       1 << 1,       0,           -1 },
+	{ "Firefox",  		NULL,        	 NULL,       1 << 1,       0,           -1 },
 	{ "Alacritty", 		"music",     	 "ncmpcpp",  1 << 2,       0,           -1 },
 	{ "Alacritty",      	"Alacritty",   	 NULL,       1 << 0,       0,           -1 },
 	{ "Alacritty", 		"float", 	 "temporary",0,            1,           -1 },
@@ -56,6 +56,7 @@ static const Rule rules[] = {
 	{ "VirtualBox Manager",	"Virtualbox Manager",	 NULL,       1 << 6,       0,   -1 },
 	{ "VirtualBox Machine",	"Virtualbox Machine",	 NULL,       1 << 6,       0,   -1 },
 	{ "Sxiv", 		"sxiv",	 	 "sxiv",       0,            1,         -1 },
+	{ NULL, 		NULL,	 	 "pulsemixer",       0,            1,         -1 },
 };
 
 /* layout(s) */
@@ -133,14 +134,14 @@ static Key keys[] = {
 	{0,XF86XK_AudioMute,	 	spawn, SHCMD("pactl set-sink-mute @DEFAULT_SINK@ toggle")},
 	{0,XF86XK_AudioLowerVolume,	spawn, SHCMD("pactl set-sink-volume @DEFAULT_SINK@ -5%")},
 	{0,XF86XK_AudioRaiseVolume,	spawn, SHCMD("pactl set-sink-volume @DEFAULT_SINK@ +5%")},
-	{0,XF86XK_Launch1,		spawn, SHCMD("alacritty --class float,Alacritty -t temporary -e pulsemixer")},
+	{0,XF86XK_Launch1,		spawn, SHCMD("st -e pulsemixer")},
 	{0,XF86XK_MonBrightnessUp,	spawn, SHCMD("xbacklight -inc 5%")},
 	{0,XF86XK_MonBrightnessDown,	spawn, SHCMD("xbacklight -dec 5%")},
 	{0,XF86XK_AudioPlay,		spawn, SHCMD("mpc toggle")},
 	{0,XF86XK_AudioNext,		spawn, SHCMD("mpc next")},
 	{0,XF86XK_AudioPrev,		spawn, SHCMD("mpc prev")},
-	{0,XF86XK_AudioLowerVolume,	spawn, SHCMD("mixer vol -5")},
-	{0,XF86XK_AudioRaiseVolume,	spawn, SHCMD("mixer vol +5")},
+//	{0,XF86XK_AudioLowerVolume,	spawn, SHCMD("mixer vol -5")},
+//	{0,XF86XK_AudioRaiseVolume,	spawn, SHCMD("mixer vol +5")},
 	{MODKEY|ShiftMask,	 	XK_m, spawn , SHCMD("alacritty --class music,Alacritty -t ncmpcpp -e $HOME/.local/dot/myscript/ncmpcpp.sh")}, 
 	{MODKEY|ShiftMask,     	        XK_Return, spawn, SHCMD("alacritty --class float,Alacritty -t temporary")          },
 	{MODKEY|ShiftMask,     	        XK_w, spawn, SHCMD("firefox -p")},
