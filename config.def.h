@@ -46,8 +46,8 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      		instance     	 title       tags mask     isfloating   monitor */
-	{ "firefox",  		NULL,        	 NULL,       1 << 1,       0,           -1 },
-	{ "Alacritty", 		"music",     	 "ncmpcpp",  1 << 2,       0,           -1 },
+	{ "Firefox",  		NULL,        	 NULL,       1 << 1,       0,           -1 },
+	{ NULL, 		"music",     	 "ncmpcpp",  1 << 2,       0,           -1 },
 	{ "Alacritty",      	"Alacritty",   	 NULL,       1 << 0,       0,           -1 },
 	{ "Alacritty", 		"float", 	 "temporary",0,            1,           -1 },
 	{ "mpv",      		"xv",        	 NULL,       1 << 3,       1,           -1 },
@@ -56,6 +56,7 @@ static const Rule rules[] = {
 	{ "VirtualBox Manager",	"Virtualbox Manager",	 NULL,       1 << 6,       0,   -1 },
 	{ "VirtualBox Machine",	"Virtualbox Machine",	 NULL,       1 << 6,       0,   -1 },
 	{ "Sxiv", 		"sxiv",	 	 "sxiv",       0,            1,         -1 },
+	{ NULL, 		NULL,	 	 "pulsemixer",       0,            1,         -1 },
 };
 
 /* layout(s) */
@@ -63,11 +64,14 @@ static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] 
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 
+#include "fibonacci.c"
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
+ 	{ "[@]",      spiral },
+ 	{ "[\\]",      dwindle },
 };
 
 /* key definitions */
@@ -85,7 +89,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray2, "-sb", col_gray1, "-sf", col_gray2, "-b", "-p", "Dango: " , "-i", NULL };
-static const char *termcmd[]  = { "alacritty", NULL };
+static const char *termcmd[]  = { "st", NULL };
 #include "unfloat.c"
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -105,6 +109,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
+	{ MODKEY,                       XK_r,      setlayout,      {.v = &layouts[3]} },
+	{ MODKEY|ShiftMask,             XK_r,      setlayout,      {.v = &layouts[4]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 //	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY|ShiftMask, 		XK_space,  unfloatvisible, {0} },
@@ -133,15 +139,15 @@ static Key keys[] = {
 	{0,XF86XK_AudioMute,	 	spawn, SHCMD("pactl set-sink-mute @DEFAULT_SINK@ toggle")},
 	{0,XF86XK_AudioLowerVolume,	spawn, SHCMD("pactl set-sink-volume @DEFAULT_SINK@ -5%")},
 	{0,XF86XK_AudioRaiseVolume,	spawn, SHCMD("pactl set-sink-volume @DEFAULT_SINK@ +5%")},
-	{0,XF86XK_Launch1,		spawn, SHCMD("alacritty --class float,Alacritty -t temporary -e pulsemixer")},
+	{0,XF86XK_Launch1,		spawn, SHCMD("st -e pulsemixer")},
 	{0,XF86XK_MonBrightnessUp,	spawn, SHCMD("xbacklight -inc 5%")},
 	{0,XF86XK_MonBrightnessDown,	spawn, SHCMD("xbacklight -dec 5%")},
 	{0,XF86XK_AudioPlay,		spawn, SHCMD("mpc toggle")},
 	{0,XF86XK_AudioNext,		spawn, SHCMD("mpc next")},
 	{0,XF86XK_AudioPrev,		spawn, SHCMD("mpc prev")},
-	{0,XF86XK_AudioLowerVolume,	spawn, SHCMD("mixer vol -5")},
-	{0,XF86XK_AudioRaiseVolume,	spawn, SHCMD("mixer vol +5")},
-	{MODKEY|ShiftMask,	 	XK_m, spawn , SHCMD("alacritty --class music,Alacritty -t ncmpcpp -e $HOME/.local/dot/myscript/ncmpcpp.sh")}, 
+//	{0,XF86XK_AudioLowerVolume,	spawn, SHCMD("mixer vol -5")},
+//	{0,XF86XK_AudioRaiseVolume,	spawn, SHCMD("mixer vol +5")},
+	{MODKEY|ShiftMask,	 	XK_m, spawn , SHCMD("st -T 'ncmpcpp' -t 'music' -e $HOME/.local/dot/myscript/ncmpcpp.sh")}, 
 	{MODKEY|ShiftMask,     	        XK_Return, spawn, SHCMD("alacritty --class float,Alacritty -t temporary")          },
 	{MODKEY|ShiftMask,     	        XK_w, spawn, SHCMD("firefox -p")},
 	{MODKEY|ShiftMask,     	        XK_f, spawn, SHCMD("alacritty --class float,Alacritty -t temporary -e lf")},

@@ -47,7 +47,7 @@ static const Rule rules[] = {
 	 */
 	/* class      		instance     	 title       tags mask     isfloating   monitor */
 	{ "Firefox",  		NULL,        	 NULL,       1 << 1,       0,           -1 },
-	{ "Alacritty", 		"music",     	 "ncmpcpp",  1 << 2,       0,           -1 },
+	{ NULL, 		"music",     	 "ncmpcpp",  1 << 2,       0,           -1 },
 	{ "Alacritty",      	"Alacritty",   	 NULL,       1 << 0,       0,           -1 },
 	{ "Alacritty", 		"float", 	 "temporary",0,            1,           -1 },
 	{ "mpv",      		"xv",        	 NULL,       1 << 3,       1,           -1 },
@@ -64,11 +64,14 @@ static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] 
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 
+#include "fibonacci.c"
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
+ 	{ "[@]",      spiral },
+ 	{ "[\\]",      dwindle },
 };
 
 /* key definitions */
@@ -106,6 +109,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
+	{ MODKEY,                       XK_r,      setlayout,      {.v = &layouts[3]} },
+	{ MODKEY|ShiftMask,             XK_r,      setlayout,      {.v = &layouts[4]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 //	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY|ShiftMask, 		XK_space,  unfloatvisible, {0} },
@@ -142,7 +147,7 @@ static Key keys[] = {
 	{0,XF86XK_AudioPrev,		spawn, SHCMD("mpc prev")},
 //	{0,XF86XK_AudioLowerVolume,	spawn, SHCMD("mixer vol -5")},
 //	{0,XF86XK_AudioRaiseVolume,	spawn, SHCMD("mixer vol +5")},
-	{MODKEY|ShiftMask,	 	XK_m, spawn , SHCMD("alacritty --class music,Alacritty -t ncmpcpp -e $HOME/.local/dot/myscript/ncmpcpp.sh")}, 
+	{MODKEY|ShiftMask,	 	XK_m, spawn , SHCMD("st -T 'ncmpcpp' -t 'music' -e $HOME/.local/dot/myscript/ncmpcpp.sh")}, 
 	{MODKEY|ShiftMask,     	        XK_Return, spawn, SHCMD("alacritty --class float,Alacritty -t temporary")          },
 	{MODKEY|ShiftMask,     	        XK_w, spawn, SHCMD("firefox -p")},
 	{MODKEY|ShiftMask,     	        XK_f, spawn, SHCMD("alacritty --class float,Alacritty -t temporary -e lf")},
