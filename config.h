@@ -17,8 +17,8 @@ enum showtab_modes { showtab_never, showtab_auto, showtab_nmodes, showtab_always
 static const int showtab			= showtab_auto;        /* Default tab bar show mode */
 static const int toptab				= True;               /* False means bottom tab bar */
 //static const char *fonts[]          = { "Hack:style=Regular:pixelsize=14" };
-static const char *fonts[]          = {"Hack Nerd Font:style=Regular:pixelsize=10:antialias=true:hinting=true" };
-static const char dmenufont[]       = "Hack Nerd Font:style=Regular:pixelsize=10";
+static const char *fonts[]          = {"Hack Nerd Font:style=Regular:pixelsize=12:antialias=true:hinting=true" };
+static const char dmenufont[]       = "Hack Nerd Font:style=Regular:pixelsize=12";
 //static const char col_gray1[]       = "#2e3440";
 static const char col_gray1[]       = "#70A9A1";
 static const char col_gray2[]       = "#444444";
@@ -29,7 +29,7 @@ static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray2, col_gray1 },
 	[SchemeSel]  = { col_gray4, col_gray1,  col_gray4  },
-	[SchemeStatus]  = { col_gray3, col_cyan,  "#000000"  }, // Statusbar right {text,background,not used but cannot be empty}
+	[SchemeStatus]  = { col_gray2, col_gray4,  "#000000"  }, // Statusbar right {text,background,not used but cannot be empty}
 	[SchemeTagsSel]  = { "#ffffff", col_gray1,  "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
 	[SchemeTagsNorm]  = { col_gray4, col_gray1,  "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
 	[SchemeInfoSel]  = { col_gray2, col_gray4,  "#000000"  }, // infobar middle  selected {text,background,not used but cannot be empty}
